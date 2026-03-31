@@ -7,51 +7,322 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
   <style>
-    :root{--sp:#1DB954;--yt:#FF0000;--gold:#F5A623;--silver:#9BA8B5;--bronze:#C97B3B;--bg:#0d0d0f;--surface:#16161a;--surface2:#1e1e24;--border:rgba(255,255,255,0.07);--text:#f0f0f4;--muted:#7a7a8c;--accent:#6C63FF}
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
-    header{background:var(--surface);border-bottom:1px solid var(--border);padding:1.25rem 1rem;position:sticky;top:0;z-index:100}
-    .header-inner{max-width:860px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
-    .logo{font-family:'Space Grotesk',sans-serif;font-size:1.25rem;font-weight:700;color:var(--text)}
-    .logo span{color:var(--accent)}
-    .week-badge{font-size:12px;color:var(--muted);background:var(--surface2);border:1px solid var(--border);padding:4px 10px;border-radius:20px}
-    .platform-pills{display:flex;gap:8px}
-    .pill{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:500;padding:4px 10px;border-radius:20px;border:1px solid var(--border);color:var(--muted)}
-    .dot{width:7px;height:7px;border-radius:50%}
-    .filters{max-width:860px;margin:1.25rem auto 0;padding:0 1rem;display:flex;gap:8px;flex-wrap:wrap}
-    .filter-btn{padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all .15s}
-    .filter-btn:hover{border-color:rgba(255,255,255,.2);color:var(--text)}
-    .filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
-    main{max-width:860px;margin:1.5rem auto 4rem;padding:0 1rem}
-    .track-list{display:flex;flex-direction:column;gap:4px}
-    .track{display:grid;grid-template-columns:36px 52px 1fr auto;align-items:center;gap:14px;padding:10px 14px;border-radius:10px;border:1px solid transparent;transition:background .15s,border-color .15s}
-    .track:hover{background:var(--surface2);border-color:var(--border)}
-    .rank-num{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;text-align:center;color:var(--muted);min-width:36px}
-    .rank-1{color:var(--gold)}.rank-2{color:var(--silver)}.rank-3{color:var(--bronze)}
-    .track-thumb{width:52px;height:52px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
-    .track-info{min-width:0}
-    .track-title{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text)}
-    .track-artist{font-size:12px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .track-tags{display:flex;align-items:center;gap:6px;margin-top:5px;flex-wrap:wrap}
-    .tag-both{font-size:10px;font-weight:600;color:var(--accent);background:rgba(108,99,255,.12);border:1px solid rgba(108,99,255,.3);padding:2px 7px;border-radius:4px}
-    .sp-link{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:500;color:var(--sp);background:rgba(29,185,84,.08);border:1px solid rgba(29,185,84,.25);padding:2px 8px;border-radius:4px;text-decoration:none;transition:background .15s}
-    .sp-link:hover{background:rgba(29,185,84,.18)}
-    .sp-link svg{width:10px;height:10px;fill:var(--sp)}
-    .track-meta{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0;min-width:110px}
-    .total-streams{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;color:var(--text)}
-    .platform-detail{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
-    .plat-row{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)}
-    .plat-dot{width:6px;height:6px;border-radius:50%}
-    .empty{text-align:center;padding:3rem 1rem;color:var(--muted);font-size:14px}
-    footer{text-align:center;padding:2rem 1rem;color:var(--muted);font-size:12px;border-top:1px solid var(--border);margin-top:2rem}
-    footer a{color:var(--muted)}
-    @media(max-width:520px){.track{grid-template-columns:28px 40px 1fr auto;gap:8px}.track-thumb{width:40px;height:40px}.platform-detail{display:none}.total-streams{font-size:12px}}
+    :root {
+      --sp: #1DB954;
+      --yt: #FF0000;
+      --gold: #F5A623;
+      --silver: #9BA8B5;
+      --bronze: #C97B3B;
+      --bg: #0d0d0f;
+      --surface: #16161a;
+      --surface2: #1e1e24;
+      --border: rgba(255,255,255,0.07);
+      --text: #f0f0f4;
+      --muted: #7a7a8c;
+      --accent: #6C63FF;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--text);
+    }
+    .logo span { color: var(--accent); }
+    .week-badge {
+      font-size: 12px;
+      color: var(--muted);
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+    .platform-pills { display: flex; gap: 8px; }
+    .pill {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .dot { width: 7px; height: 7px; border-radius: 50%; }
+
+    /* ── FILTERS ── */
+    .filters {
+      max-width: 860px;
+      margin: 1.25rem auto 0;
+      padding: 0 1rem;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .genre-filters {
+      max-width: 860px;
+      margin: 0.5rem auto 0;
+      padding: 0 1rem;
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .filter-btn:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
+    .filter-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .genre-btn {
+      padding: 4px 11px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .genre-btn:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
+    .genre-btn.active {
+      background: var(--surface2);
+      border-color: rgba(255,255,255,0.25);
+      color: var(--text);
+    }
+    .genre-btn.dim { opacity: 0.4; }
+
+    /* ── MAIN ── */
+    main {
+      max-width: 860px;
+      margin: 1.5rem auto 4rem;
+      padding: 0 1rem;
+    }
+
+    /* ── TRACK ROW ── */
+    .track-list { display: flex; flex-direction: column; gap: 4px; }
+
+    .track {
+      display: grid;
+      grid-template-columns: 36px 52px 1fr auto;
+      align-items: center;
+      gap: 14px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      transition: background 0.15s, border-color 0.15s;
+      cursor: default;
+    }
+    .track:hover {
+      background: var(--surface2);
+      border-color: var(--border);
+    }
+
+    .rank-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      text-align: center;
+      color: var(--muted);
+      min-width: 36px;
+    }
+    .rank-1 { color: var(--gold); }
+    .rank-2 { color: var(--silver); }
+    .rank-3 { color: var(--bronze); }
+
+    .track-thumb {
+      width: 52px; height: 52px;
+      border-radius: 8px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .track-thumb img {
+      width: 52px;
+      height: 52px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: none;
+      display: block;
+    }
+
+    .track-info { min-width: 0; }
+    .track-title {
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--text);
+    }
+    .track-artist {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .track-tags { display: flex; align-items: center; gap: 6px; margin-top: 5px; flex-wrap: wrap; }
+
+    .tag-both {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--accent);
+      background: rgba(108,99,255,0.12);
+      border: 1px solid rgba(108,99,255,0.3);
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    .sp-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--sp);
+      background: rgba(29,185,84,0.08);
+      border: 1px solid rgba(29,185,84,0.25);
+      padding: 2px 8px;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .sp-link:hover { background: rgba(29,185,84,0.18); }
+    .sp-link svg { width: 10px; height: 10px; fill: var(--sp); }
+
+    .copy-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--sp);
+      background: rgba(29,185,84,0.08);
+      border: 1px solid rgba(29,185,84,0.25);
+      padding: 2px 7px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.15s;
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.4;
+    }
+    .copy-btn:hover { background: rgba(29,185,84,0.18); }
+    .copy-btn svg { width: 10px; height: 10px; fill: var(--sp); }
+
+    /* ── META RIGHT ── */
+    .track-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 5px;
+      flex-shrink: 0;
+      min-width: 110px;
+    }
+    .total-streams {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .platform-detail {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 2px;
+    }
+    .plat-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .plat-dot { width: 6px; height: 6px; border-radius: 50%; }
+    .trend-up   { color: #22c55e; font-size: 11px; }
+    .trend-down { color: #ef4444; font-size: 11px; }
+    .trend-new  { color: var(--gold); font-size: 10px; font-weight: 600; }
+
+    /* ── EMPTY ── */
+    .empty {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: var(--muted);
+      font-size: 12px;
+      border-top: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+    footer a { color: var(--muted); }
+
+    @media (max-width: 520px) {
+      .track { grid-template-columns: 28px 40px 1fr auto; gap: 8px; }
+      .track-thumb { width: 40px; height: 40px; }
+      .track-thumb img { width: 40px; height: 40px; }
+      .platform-detail { display: none; }
+      .total-streams { font-size: 12px; }
+    }
   </style>
 </head>
 <body>
+
 <header>
   <div class="header-inner">
-    <div class="logo">Ranking<span>BR</span></div>
+    <div>
+      <div class="logo">Ranking<span>BR</span></div>
+    </div>
     <div id="week-badge" class="week-badge">carregando...</div>
     <div class="platform-pills">
       <div class="pill"><span class="dot" style="background:var(--sp)"></span>Spotify</div>
@@ -59,62 +330,195 @@
     </div>
   </div>
 </header>
+
 <div class="filters" id="filters">
   <button class="filter-btn active" data-filter="all">Todos</button>
   <button class="filter-btn" data-filter="both">Nas duas plataformas</button>
-  <button class="filter-btn" data-filter="spotify">So Spotify</button>
-  <button class="filter-btn" data-filter="youtube">So YouTube</button>
+  <button class="filter-btn" data-filter="spotify">Só Spotify</button>
+  <button class="filter-btn" data-filter="youtube">Só YouTube</button>
 </div>
+
+<div class="genre-filters" id="genre-filters"></div>
+
 <main>
-  <div class="track-list" id="track-list"><div class="empty">Carregando ranking...</div></div>
+  <div class="track-list" id="track-list">
+    <div class="empty">Carregando ranking...</div>
+  </div>
 </main>
+
 <footer>
   Dados: <a href="https://kworb.net/spotify/country/br_weekly.html" target="_blank">kworb Spotify BR</a> +
-  <a href="https://kworb.net/youtube/insights/br.html" target="_blank">kworb YouTube BR</a> &bull;
+  <a href="https://kworb.net/youtube/insights/br.html" target="_blank">kworb YouTube BR</a> •
   Atualizado toda sexta-feira
 </footer>
+
 <script>
-const EMOJIS=["🔥","🎵","⭐","👑","💥","🎤","🎶","🥁","🎸","🎧","🌟","💫","🏆","🎼","🎹","🎺","🎻","🪗","🪘","🥳"];
-function emoji(i){return EMOJIS[i%EMOJIS.length]}
-function fmt(n){if(!n)return"—";if(n>=1e9)return(n/1e9).toFixed(1)+"B";if(n>=1e6)return(n/1e6).toFixed(1)+"M";if(n>=1e3)return(n/1e3).toFixed(0)+"K";return n.toString()}
-let allTracks=[],currentFilter="all";
-async function loadRanking(){
-  const list=document.getElementById("track-list");
-  try{
-    const res=await fetch("data/ranking.json");
-    if(!res.ok)throw new Error("Arquivo nao encontrado");
-    const data=await res.json();
-    allTracks=data.tracks||[];
-    document.getElementById("week-badge").textContent=data.week_label||"";
-    render();
-  }catch(e){list.innerHTML='<div class="empty">Nao foi possivel carregar o ranking.<br><small>'+e.message+'</small></div>'}
+const EMOJIS = ["🔥","🎵","⭐","👑","💥","🎤","🎶","🥁","🎸","🎧",
+                "🌟","💫","🏆","🎼","🎹","🎺","🎻","🪗","🪘","🥳"];
+
+function emoji(i) { return EMOJIS[i % EMOJIS.length]; }
+
+function fmt(n) {
+  if (!n) return "—";
+  if (n >= 1e9) return (n / 1e9).toFixed(1) + "B";
+  if (n >= 1e6) return (n / 1e6).toFixed(1) + "M";
+  if (n >= 1e3) return (n / 1e3).toFixed(0) + "K";
+  return n.toString();
 }
-function render(){
-  const list=document.getElementById("track-list");
-  let tracks=allTracks;
-  if(currentFilter==="both")tracks=allTracks.filter(t=>t.in_both);
-  if(currentFilter==="spotify")tracks=allTracks.filter(t=>t.pos_spotify&&!t.in_both);
-  if(currentFilter==="youtube")tracks=allTracks.filter(t=>t.pos_youtube&&!t.in_both);
-  if(!tracks.length){list.innerHTML='<div class="empty">Nenhuma musica neste filtro.</div>';return}
-  list.innerHTML=tracks.map((t,i)=>{
-    const rankCls=t.rank===1?"rank-1":t.rank===2?"rank-2":t.rank===3?"rank-3":"";
-    const spLink=t.spotify_url
-      ?'<a class="sp-link" href="'+t.spotify_url+'" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>Ouvir</a>'
-      :'<span class="sp-link" style="opacity:.35;cursor:default;">sem link</span>';
-    const bothTag=t.in_both?'<span class="tag-both">nas duas</span>':"";
-    const spRow=t.streams_spotify?'<div class="plat-row"><span class="plat-dot" style="background:var(--sp)"></span>#'+(t.pos_spotify||"—")+' · '+fmt(t.streams_spotify)+'</div>':"";
-    const ytRow=t.streams_youtube?'<div class="plat-row"><span class="plat-dot" style="background:var(--yt)"></span>#'+(t.pos_youtube||"—")+' · '+fmt(t.streams_youtube)+'</div>':"";
-    return '<div class="track"><div class="rank-num '+rankCls+'">'+t.rank+'</div><div class="track-thumb">'+emoji(i)+'</div><div class="track-info"><div class="track-title">'+t.title+'</div><div class="track-artist">'+t.artist+'</div><div class="track-tags">'+bothTag+spLink+'</div></div><div class="track-meta"><div class="total-streams">'+fmt(t.total_streams)+'</div><div class="platform-detail">'+spRow+ytRow+'</div></div></div>';
+
+let allTracks = [];
+let currentFilter = "all";
+let currentGenre = "all";
+
+function copyLink(url, btn) {
+  navigator.clipboard.writeText(url).then(() => {
+    const original = btn.innerHTML;
+    btn.innerHTML = "Copiado!";
+    setTimeout(() => { btn.innerHTML = original; }, 1500);
+  });
+}
+
+function filterByPlatform(tracks) {
+  if (currentFilter === "both")    return tracks.filter(t => t.in_both);
+  if (currentFilter === "spotify") return tracks.filter(t => t.pos_spotify && !t.in_both);
+  if (currentFilter === "youtube") return tracks.filter(t => t.pos_youtube && !t.in_both);
+  return tracks;
+}
+
+function buildGenreFilters() {
+  const container = document.getElementById("genre-filters");
+  // Count genres across ALL tracks
+  const genreCounts = {};
+  for (const t of allTracks) {
+    const g = t.genre || "outros";
+    genreCounts[g] = (genreCounts[g] || 0) + 1;
+  }
+  const genres = Object.keys(genreCounts).sort((a, b) => genreCounts[b] - genreCounts[a]);
+
+  // Count genres in current platform filter
+  const platformFiltered = filterByPlatform(allTracks);
+  const platformGenres = new Set(platformFiltered.map(t => t.genre || "outros"));
+
+  const allBtn = document.createElement("button");
+  allBtn.className = "genre-btn" + (currentGenre === "all" ? " active" : "");
+  allBtn.textContent = "Todos os gêneros";
+  allBtn.dataset.genre = "all";
+  container.appendChild(allBtn);
+
+  for (const g of genres) {
+    const btn = document.createElement("button");
+    const isActive = currentGenre === g;
+    const hasTracks = platformGenres.has(g);
+    btn.className = "genre-btn" + (isActive ? " active" : "") + (!hasTracks ? " dim" : "");
+    btn.textContent = g;
+    btn.dataset.genre = g;
+    container.appendChild(btn);
+  }
+}
+
+function render() {
+  const list = document.getElementById("track-list");
+  let tracks = filterByPlatform(allTracks);
+
+  if (currentGenre !== "all") {
+    tracks = tracks.filter(t => (t.genre || "outros") === currentGenre);
+  }
+
+  if (!tracks.length) {
+    list.innerHTML = `<div class="empty">Nenhuma música neste filtro.</div>`;
+    return;
+  }
+
+  list.innerHTML = tracks.map((t, i) => {
+    const rankCls = t.rank === 1 ? "rank-1" : t.rank === 2 ? "rank-2" : t.rank === 3 ? "rank-3" : "";
+
+    const thumbContent = t.thumbnail_url
+      ? `<img src="${t.thumbnail_url}" width="52" height="52" alt="">`
+      : emoji(i);
+
+    const copyIconSvg = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>`;
+
+    const spButtons = t.spotify_url
+      ? `<a class="sp-link" href="${t.spotify_url}" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+          Ouvir
+        </a>
+        <button class="copy-btn" onclick="copyLink('${t.spotify_url}', this)" title="Copiar link">${copyIconSvg}</button>`
+      : "";
+
+    const bothTag = t.in_both ? `<span class="tag-both">✦ nas duas</span>` : "";
+
+    const spRow = t.streams_spotify
+      ? `<div class="plat-row"><span class="plat-dot" style="background:var(--sp)"></span>#${t.pos_spotify ?? "—"} · ${fmt(t.streams_spotify)}</div>`
+      : "";
+    const ytRow = t.streams_youtube
+      ? `<div class="plat-row"><span class="plat-dot" style="background:var(--yt)"></span>#${t.pos_youtube ?? "—"} · ${fmt(t.streams_youtube)}</div>`
+      : "";
+
+    return `
+    <div class="track">
+      <div class="rank-num ${rankCls}">${t.rank}</div>
+      <div class="track-thumb">${thumbContent}</div>
+      <div class="track-info">
+        <div class="track-title">${t.title}</div>
+        <div class="track-artist">${t.artist}</div>
+        <div class="track-tags">
+          ${bothTag}
+          ${spButtons}
+        </div>
+      </div>
+      <div class="track-meta">
+        <div class="total-streams">${fmt(t.total_streams)}</div>
+        <div class="platform-detail">
+          ${spRow}
+          ${ytRow}
+        </div>
+      </div>
+    </div>`;
   }).join("");
 }
-document.getElementById("filters").addEventListener("click",e=>{
-  const btn=e.target.closest(".filter-btn");
-  if(!btn)return;
-  document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
+
+function refreshGenreFilters() {
+  const container = document.getElementById("genre-filters");
+  container.innerHTML = "";
+  buildGenreFilters();
+}
+
+async function loadRanking() {
+  const list = document.getElementById("track-list");
+  try {
+    const res = await fetch("data/ranking.json");
+    if (!res.ok) throw new Error("Arquivo não encontrado");
+    const data = await res.json();
+    allTracks = data.tracks || [];
+    document.getElementById("week-badge").textContent = data.week_label || "";
+    buildGenreFilters();
+    render();
+  } catch (e) {
+    list.innerHTML = `<div class="empty">Não foi possível carregar o ranking.<br><small>${e.message}</small></div>`;
+  }
+}
+
+// Filtros de plataforma
+document.getElementById("filters").addEventListener("click", e => {
+  const btn = e.target.closest(".filter-btn");
+  if (!btn) return;
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
   btn.classList.add("active");
-  currentFilter=btn.dataset.filter;
+  currentFilter = btn.dataset.filter;
+  refreshGenreFilters();
   render();
 });
+
+// Filtros de gênero (delegação de eventos)
+document.getElementById("genre-filters").addEventListener("click", e => {
+  const btn = e.target.closest(".genre-btn");
+  if (!btn) return;
+  currentGenre = btn.dataset.genre;
+  refreshGenreFilters();
+  render();
+});
+
 loadRanking();
 </script>
 </body>
