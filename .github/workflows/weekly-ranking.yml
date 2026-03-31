@@ -1,0 +1,56 @@
+name: Atualizar Ranking Semanal
+
+on:
+  schedule:
+    - cron: "0 13 * * 5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  scrape-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependencias
+        run: pip install requests beautifulsoup4
+
+      - name: Rodar scraper
+        run: python scraper.py
+
+      - name: Commit ranking.json atualizado
+        run: |
+          git config user.name "Ranking Bot"
+          git config user.email "bot@ranking-brasil.com"
+          git add data/ranking.json
+          git diff --staged --quiet || git commit -m "Ranking atualizado - $(date '+%d/%m/%Y')"
+          git push
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
